@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Diceware Password Generator</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <div class="container">
+    <h1>Diceware Password Generator</h1>
+
+    <label for="wordCount">Number of words (1–10):</label>
+    <input id="wordCount" type="number" min="1" max="10" value="4" />
+
+    <label for="customPassword">Or enter your own password:</label>
+    <input id="customPassword" type="text" placeholder="Type your password here..." />
+
+    <label class="checkbox-label">
+      <input id="useCustomCheckbox" type="checkbox" />
+      Modify my custom password instead
+    </label>
+
+    <label class="checkbox-label">
+      <input id="leetCheckbox" type="checkbox" />
+      Replace some letters with numbers
+    </label>
+
+    <label class="checkbox-label">
+      <input id="symbolsCheckbox" type="checkbox" />
+      Add random symbols
+    </label>
+
+    <button id="generateBtn" disabled>Loading word list...</button>
+
+    <pre id="output">Your password will appear here</pre>
+
+    <button id="copyBtn" disabled>Copy to Clipboard</button>
+
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>

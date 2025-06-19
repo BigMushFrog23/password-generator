@@ -1,0 +1,83 @@
+body {
+  background: #121212;
+  color: #eee;
+  font-family: monospace, monospace;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  margin: 0;
+  padding: 20px;
+}
+.container {
+  background: #222;
+  padding: 20px;
+  border-radius: 8px;
+  max-width: 400px;
+  width: 100%;
+  box-sizing: border-box;
+}
+input[type="number"],
+input[type="text"] {
+  width: 100%;
+  padding: 8px;
+  margin: 8px 0 16px 0;
+  border-radius: 4px;
+  border: none;
+  font-size: 16px;
+  box-sizing: border-box;
+}
+label {
+  display: block;
+  margin-bottom: 8px;
+}
+button {
+  width: 100%;
+  padding: 12px;
+  font-size: 16px;
+  background: #0b74de;
+  border: none;
+  border-radius: 4px;
+  color: white;
+  cursor: pointer;
+}
+button:disabled {
+  background: #555;
+  cursor: not-allowed;
+}
+pre {
+  background: #111;
+  padding: 12px;
+  border-radius: 4px;
+  margin-top: 20px;
+  min-height: 40px;
+  white-space: pre-wrap;
+  word-wrap: break-word;
+  font-size: 18px;
+  color: #5edc5e;
+}
+.checkbox-label {
+  margin-bottom: 12px;
+  user-select: none;
+  cursor: pointer;
+}
+.checkbox-label input {
+  margin-right: 8px;
+  cursor: pointer;
+}
+#copyBtn {
+  width: 100%;
+  padding: 12px;
+  font-size: 16px;
+  background: #28a745;
+  border: none;
+  border-radius: 4px;
+  color: white;
+  cursor: pointer;
+  margin-top: 10px;
+}
+#copyBtn:disabled {
+  background: #555;
+  cursor: not-allowed;
+}
+
