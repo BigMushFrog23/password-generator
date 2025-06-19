@@ -26,21 +26,21 @@
 
       if (!email || !password) return alert("Please fill in both fields.");
 
-      fetch("../login.php", {
-        method: "POST",
-        headers: { "Content-Type": "application/x-www-form-urlencoded" },
-        body: `email=${encodeURIComponent(email)}&password=${encodeURIComponent(password)}`
-      })
-      .then(res => res.text())
-      .then(msg => {
-        if (msg.includes("Login successful")) {
-          alert("Logged in successfully!");
-          window.location.href = "index.html";
+      document.getElementById('loginBtn').addEventListener('click', async () => {
+        const email = document.getElementById('email').value.trim();
+        const password = document.getElementById('password').value;
+
+        if (!email || !password) return alert("Please fill in both fields.");
+
+        const { data, error } = await supabase.auth.signInWithPassword({ email, password });
+
+        if (error) {
+            alert(error.message);
         } else {
-          alert(msg);
+            alert("Logged in successfully!");
+            window.location.href = "index.html";  // your post-login page
         }
-      })
-      .catch(() => alert("Error connecting to server."));
+        });
     });
   </script>
 </body>
