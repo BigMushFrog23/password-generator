@@ -26,21 +26,19 @@
 
     if (!email || !password) return alert("Please fill in both fields.");
 
-    document.getElementById('registerBtn').addEventListener('click', async () => {
-    const email = document.getElementById('email').value.trim();
-    const password = document.getElementById('password').value;
-
-    if (!email || !password) return alert("Please fill in both fields.");
-
-    const { data, error } = await supabase.auth.signUp({ email, password });
-
-    if (error) {
-        alert(error.message);
-    } else {
-        alert("Registration successful! Please check your email for confirmation.");
+    fetch("../register.php", {
+      method: "POST",
+      headers: { "Content-Type": "application/x-www-form-urlencoded" },
+      body: `email=${encodeURIComponent(email)}&password=${encodeURIComponent(password)}`
+    })
+    .then(res => res.text())
+    .then(msg => {
+      alert(msg);
+      // Redirect if registration successful (adjust this condition to your exact success message)
+      if (msg.toLowerCase().includes("success")) {
         window.location.href = "login.html";
-    }
-    });
+      }
+    })
+    .catch(() => alert("Error connecting to server."));
   });
-
 </script>

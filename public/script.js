@@ -174,19 +174,3 @@ document.getElementById("loadPasswordsBtn").addEventListener("click", () => {
     alert(err.message);
   });
 });
-
-const logoutBtn = document.getElementById("logoutBtn");
-
-logoutBtn.addEventListener("click", () => {
-  fetch("../logout.php", {
-    method: "POST",
-    credentials: "include"  // send PHPSESSID cookie
-  })
-  .then(() => {
-    // Redirect to login page after logout
-    window.location.href = "login.html";
-  })
-  .catch(() => {
-    alert("Logout failed.");
-  });
-});
