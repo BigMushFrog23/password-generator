@@ -86,6 +86,7 @@ function generatePassword() {
   if (useSymbols) base = insertRandomSymbols(base);
   
   output.textContent = base;
+  saveBtn.disabled = false;
   updateCopyButtonState();
 }
 
@@ -99,7 +100,7 @@ useCustomCheckbox.addEventListener("change", () => {
 generateBtn.addEventListener("click", generatePassword);
 
 // Load word list on page load
-fetch("10000-english-words.txt")
+fetch("../10000-english-words.txt")
   .then(response => {
     if (!response.ok) throw new Error("Failed to load word list");
     return response.text();
@@ -115,3 +116,77 @@ fetch("10000-english-words.txt")
     generateBtn.disabled = true;
     generateBtn.textContent = "Failed to load word list";
   });
+
+const saveBtn = document.getElementById("saveBtn");
+
+saveBtn.addEventListener("click", () => {
+  const password = output.textContent.trim();
+
+  if (!password || password === "Your password will appear here") {
+    alert("Please generate a password first.");
+    return;
+  }
+
+  fetch("../save_password.php", {
+  method: "POST",
+  headers: { "Content-Type": "application/x-www-form-urlencoded" },
+  credentials: "include",  // This sends your PHPSESSID cookie
+  body: `password=${encodeURIComponent(password)}`
+  })
+  .then(res => res.text())
+  .then(msg => {
+    alert(msg);
+  })
+  .catch(() => {
+    alert("Error saving password.");
+  });
+});
+
+document.getElementById("loadPasswordsBtn").addEventListener("click", () => {
+  fetch("../get_passwords.php", {
+    method: "GET",
+    credentials: "include"  // send PHPSESSID cookie
+  })
+  .then(res => {
+    if (!res.ok) throw new Error("Failed to load passwords.");
+    return res.json();
+  })
+  .then(data => {
+    if (data.error) {
+      alert(data.error);
+      return;
+    }
+    const list = document.getElementById("savedPasswordsList");
+    list.innerHTML = "";
+
+    if (data.length === 0) {
+      list.innerHTML = "<li>No saved passwords found.</li>";
+      return;
+    }
+
+    data.forEach(item => {
+      const li = document.createElement("li");
+      li.textContent = item.password;
+      list.appendChild(li);
+    });
+  })
+  .catch(err => {
+    alert(err.message);
+  });
+});
+
+const logoutBtn = document.getElementById("logoutBtn");
+
+logoutBtn.addEventListener("click", () => {
+  fetch("../logout.php", {
+    method: "POST",
+    credentials: "include"  // send PHPSESSID cookie
+  })
+  .then(() => {
+    // Redirect to login page after logout
+    window.location.href = "login.html";
+  })
+  .catch(() => {
+    alert("Logout failed.");
+  });
+});
